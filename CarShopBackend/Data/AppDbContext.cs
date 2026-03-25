@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CarShopBackend.Models;
 
 namespace CarShopBackend.Data {
-    public class AppDbContext : DbContext {
+    public class AppDbContext : IdentityDbContext {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<UserModel> Users { get; set; }
         public DbSet<CartModel> Carts { get; set; }
         public DbSet<WishlistModel> Wishlists { get; set; }
         public DbSet<VehicleModel> Vehicles { get; set; }
