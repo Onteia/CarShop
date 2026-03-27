@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CarShopBackend.Models;
 
 namespace CarShopBackend.Data {
-    public class AppDbContext : DbContext {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-        public DbSet<UserModel> Users { get; set; }
+    public class AppDbContext : IdentityDbContext<AppUser> {
         public DbSet<CartModel> Carts { get; set; }
         public DbSet<WishlistModel> Wishlists { get; set; }
         public DbSet<VehicleModel> Vehicles { get; set; }
@@ -14,5 +13,7 @@ namespace CarShopBackend.Data {
         public DbSet<ImageModel> Images { get; set; }
         public DbSet<ListingModel> Listings { get; set; }
         public DbSet<ListingToCartModel> ListingsToCarts { get; set; }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     }
 }
