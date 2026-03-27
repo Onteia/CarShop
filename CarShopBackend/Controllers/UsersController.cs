@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using CarShopBackend.Data;
-using CarShopBackend.Models;
 
 namespace CarShopBackend.Controllers {
     [Route("[controller]")]
@@ -15,7 +14,7 @@ namespace CarShopBackend.Controllers {
 
         // Create: /users
         [HttpPost]
-        public async Task<ActionResult<UserModel>> CreateUser(UserModel user) {
+        public async Task<ActionResult<AppUser>> CreateUser(AppUser user) {
 
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
@@ -24,8 +23,8 @@ namespace CarShopBackend.Controllers {
 
         // Read: /users/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> ReadUser(Guid id) {
-            UserModel user = await _dbContext.Users.FindAsync(id);
+        public async Task<ActionResult<AppUser>> ReadUser(Guid id) {
+            AppUser user = await _dbContext.Users.FindAsync(id);
 
             if(user == null) return NotFound();
 
