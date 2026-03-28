@@ -33,12 +33,19 @@ namespace CarShopBackend.Controllers {
 
             if(!result.Succeeded) return BadRequest(result.Errors);
 
+            List<Link> links = new List<Link>();
+            links.Add(new Link { Rel = "self", Href = Url.Action("CreateUser"), Method = "POST" });
+            links.Add(new Link { Rel = "read", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
+            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
+            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
+
             return new AppUserResponseDTO {
                 UserID = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 CartID = user.Cart.CartID,
                 WishlistID = user.Wishlist.WishlistID,
+                Links = links,
             };
         }
 
@@ -49,12 +56,19 @@ namespace CarShopBackend.Controllers {
 
             if(user == null) return NotFound();
 
+            List<Link> links = new List<Link>();
+            links.Add(new Link { Rel = "self", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
+            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser"), Method = "POST" });
+            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
+            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
+
             return new AppUserResponseDTO {
                 UserID = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 CartID = user.Cart.CartID,
                 WishlistID = user.Wishlist.WishlistID,
+                Links = links,
             };
         }
 
@@ -75,12 +89,19 @@ namespace CarShopBackend.Controllers {
                 if(!result.Succeeded) return BadRequest(result.Errors);
             }
 
+            List<Link> links = new List<Link>();
+            links.Add(new Link { Rel = "self", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
+            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser"), Method = "POST" });
+            links.Add(new Link { Rel = "read", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
+            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
+
             return new AppUserResponseDTO {
                 UserID = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 CartID = user.Cart.CartID,
                 WishlistID = user.Wishlist.WishlistID,
+                Links = links,
             };
         }
 
@@ -94,6 +115,7 @@ namespace CarShopBackend.Controllers {
             var result = await _userManager.DeleteAsync(user);
 
             if(!result.Succeeded) return BadRequest(result.Errors);
+
             return Ok();
         }
     }

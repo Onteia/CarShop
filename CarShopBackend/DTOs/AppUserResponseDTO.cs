@@ -1,5 +1,4 @@
-
-
+using CarShopBackend.Data;
 
 namespace CarShopBackend.DTOs {
     public class AppUserResponseDTO {
@@ -8,5 +7,7 @@ namespace CarShopBackend.DTOs {
         public string Email { get; set; }
         public Guid CartID { get; set; }
         public Guid WishlistID { get; set; }
+
+        public List<Link> Links { get; set; }
     }
 }
