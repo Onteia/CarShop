@@ -3,6 +3,7 @@ using System;
 using CarShopBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarShopBackend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260330210927_UserModelForeignKeys")]
+    partial class UserModelForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +107,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasKey("CartID");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.ImageModel", b =>
@@ -129,7 +132,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasIndex("VehicleModelVehicleID");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.ListingModel", b =>
@@ -155,7 +158,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasIndex("VehicleID");
 
-                    b.ToTable("Listings", (string)null);
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.ListingToCartModel", b =>
@@ -176,7 +179,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasIndex("ListingID");
 
-                    b.ToTable("ListingsToCarts", (string)null);
+                    b.ToTable("ListingsToCarts");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.ListingToWishlist", b =>
@@ -197,7 +200,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasIndex("WishlistID");
 
-                    b.ToTable("ListingToWishlist", (string)null);
+                    b.ToTable("ListingToWishlist");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.VehicleMakeModel", b =>
@@ -212,7 +215,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasKey("VehicleMakeID");
 
-                    b.ToTable("VehicleMakes", (string)null);
+                    b.ToTable("VehicleMakes");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.VehicleModel", b =>
@@ -244,7 +247,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasIndex("VehicleTypeID");
 
-                    b.ToTable("Vehicles", (string)null);
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.VehicleTypeModel", b =>
@@ -259,7 +262,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasKey("VehicleTypeID");
 
-                    b.ToTable("VehicleTypes", (string)null);
+                    b.ToTable("VehicleTypes");
                 });
 
             modelBuilder.Entity("CarShopBackend.Models.WishlistModel", b =>
@@ -270,7 +273,7 @@ namespace CarShopBackend.Migrations
 
                     b.HasKey("WishlistID");
 
-                    b.ToTable("Wishlists", (string)null);
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

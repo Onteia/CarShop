@@ -33,11 +33,14 @@ namespace CarShopBackend.Controllers {
 
             if(!result.Succeeded) return BadRequest(result.Errors);
 
-            List<Link> links = new List<Link>();
-            links.Add(new Link { Rel = "self", Href = Url.Action("CreateUser"), Method = "POST" });
-            links.Add(new Link { Rel = "read", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
-            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
-            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            string host = Url.ActionContext.HttpContext.Request.Host.ToString();
+
+            List<Link> links = new();
+            links.Add(new Link { Rel = "self", Href = Url.Action("CreateUser", null, null, scheme, host), Method = "POST" });
+            links.Add(new Link { Rel = "read", Href = Url.Action("ReadUser", null, new { user.Id }, scheme, host), Method = "GET" });
+            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", null, new { user.Id }, scheme, host), Method = "PUT" });
+            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", null, new { user.Id }, scheme, host), Method = "DELETE" });
 
             return new AppUserResponseDTO {
                 UserID = user.Id,
@@ -56,42 +59,48 @@ namespace CarShopBackend.Controllers {
 
             if(user == null) return NotFound();
 
-            List<Link> links = new List<Link>();
-            links.Add(new Link { Rel = "self", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
-            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser"), Method = "POST" });
-            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
-            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            string host = Url.ActionContext.HttpContext.Request.Host.ToString();
+
+            List<Link> links = new();
+            links.Add(new Link { Rel = "self", Href = Url.Action("ReadUser", null, new { user.Id }, scheme, host), Method = "GET" });
+            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser", null, null, scheme, host), Method = "POST" });
+            links.Add(new Link { Rel = "update", Href = Url.Action("UpdateUser", null, new { user.Id }, scheme, host), Method = "PUT" });
+            links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", null, new { user.Id }, scheme, host), Method = "DELETE" });
 
             return new AppUserResponseDTO {
                 UserID = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
-                CartID = user.Cart.CartID,
-                WishlistID = user.Wishlist.WishlistID,
+                CartID = user.CartID,
+                WishlistID = user.WishlistID,
                 Links = links,
             };
         }
 
         // Update: /users/{id}
         [HttpPut("{id}")]
-        public async Task<ActionResult<AppUserResponseDTO>> UpdateUser(string id, AppUserResponseDTO updatedUser) {
+        public async Task<ActionResult<AppUserResponseDTO>> UpdateUser([FromRoute] string id, [FromBody] AppUserResponseDTO updatedUser) {
             AppUser user = await _userManager.FindByIdAsync(id);
 
             if(user == null) return NotFound();
 
-            if(updatedUser.Username != user.UserName) {
+            if(updatedUser.Username != user.UserName && updatedUser.Username != "") {
                 var result = await _userManager.SetUserNameAsync(user, updatedUser.Username);
                 if(!result.Succeeded) return BadRequest(result.Errors);
             }
 
-            if(updatedUser.Email != user.Email) {
+            if(updatedUser.Email != user.Email && updatedUser.Email != "") {
                 var result = await _userManager.SetEmailAsync(user, updatedUser.Email);
                 if(!result.Succeeded) return BadRequest(result.Errors);
             }
 
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            string host = Url.ActionContext.HttpContext.Request.Host.ToString();
+
             List<Link> links = new List<Link>();
-            links.Add(new Link { Rel = "self", Href = Url.Action("UpdateUser", new { user.Id }), Method = "PUT" });
-            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser"), Method = "POST" });
+            links.Add(new Link { Rel = "self", Href = Url.Action("UpdateUser", null, new { user.Id }, scheme, host), Method = "PUT" });
+            links.Add(new Link { Rel = "create", Href = Url.Action("CreateUser", null, null, scheme, host), Method = "POST" });
             links.Add(new Link { Rel = "read", Href = Url.Action("ReadUser", new { user.Id }), Method = "GET" });
             links.Add(new Link { Rel = "delete", Href = Url.Action("DeleteUser", new { user.Id }), Method = "DELETE" });
 
@@ -116,7 +125,7 @@ namespace CarShopBackend.Controllers {
 
             if(!result.Succeeded) return BadRequest(result.Errors);
 
-            return Ok();
+            return Ok("Resource deleted");
         }
     }
 }
