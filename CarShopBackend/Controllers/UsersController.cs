@@ -78,6 +78,23 @@ namespace CarShopBackend.Controllers {
             };
         }
 
+        // Read: /users/{id}/carts
+        [HttpGet("{id}/carts")]
+        public async Task<ActionResult> ReadUserCart(string id) {
+            AppUser user = await _userManager.FindByIdAsync(id);
+
+            if(user == null) return NotFound();
+
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            string host = Url.ActionContext.HttpContext.Request.Host.ToString();
+
+            List<Link> links = new();
+            links.Add(new Link { Rel = "self", Href = Url.Action("ReadUserCart", null, new { user.Id }, scheme, host), Method = "GET" });
+            links.Add(new Link { Rel = "read-cart-listings", Href = Url.Action("ReadCartListings", "Carts", new { id = user.CartID }, scheme, host), Method = "GET" });
+
+            return Ok(new { CartID = user.CartID, Links = links });
+        }
+
         // Update: /users/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<AppUserResponseDTO>> UpdateUser([FromRoute] string id, [FromBody] AppUserResponseDTO updatedUser) {
