@@ -19,7 +19,7 @@ namespace CarShopBackend.Controllers {
 
         // Create: /users
         [HttpPost]
-        public async Task<ActionResult<AppUserResponseDTO>> CreateUser(RegisterAppUserRequestDTO registeruser) {
+        public async Task<ActionResult<AppUserResponseDTO>> CreateUser([FromBody] RegisterAppUserRequestDTO registeruser) {
             if(registeruser == null) return BadRequest();
 
             AppUser user = new AppUser {
