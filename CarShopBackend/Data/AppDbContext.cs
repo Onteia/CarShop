@@ -12,6 +12,7 @@ namespace CarShopBackend.Data {
         public DbSet<ImageModel> Images { get; set; }
         public DbSet<ListingModel> Listings { get; set; }
         public DbSet<ListingToCartModel> ListingsToCarts { get; set; }
+        public DbSet<ListingToWishlist> ListingsToWishlists { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     }
