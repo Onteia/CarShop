@@ -20,8 +20,9 @@ public class ListingModel {
 
     public int? SaleAmount { get; set; }
 
+    [Required]
     public virtual VehicleModel Vehicle { get; set; }
-    public virtual List<ImageModel> Images { get; set; }
+
     public virtual List<ListingToCartModel> ListingToCart { get; set; }
     public virtual List<ListingToWishlist> ListingToWishlist { get; set; }
 }
