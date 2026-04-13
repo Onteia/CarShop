@@ -17,7 +17,7 @@ namespace CarShopBackend.Controllers {
         [HttpPost]
         public async Task<ActionResult<ListingResponseDTO>> CreateListing([FromBody] ListingRequestDTO listingRequest) {
             var existingVehicle = await _dbContext.Vehicles.FindAsync(listingRequest.VehicleModelID);
-            if(existingVehicle == null) return NotFound("VehicleID doesn't exist");
+            if(existingVehicle == null) return NotFound("VehicleModelID doesn't exist");
 
             var newListing = new ListingModel {
                 Name = listingRequest.Name,
@@ -46,6 +46,21 @@ namespace CarShopBackend.Controllers {
                 Vehicle = newListing.Vehicle,
                 Links = links,
             };
+        }
+
+        // Read: /listings/
+        public async Task<ActionResult<List<ListingResponseDTO>>> ReadListings() {
+            var listings = _dbContext.Listings.ToList();
+            if(listings == null) return NotFound();
+
+            return listings.Select(listing => new ListingResponseDTO {
+                ListingID = listing.ListingID,
+                Name = listing.Name,
+                ListPrice = listing.ListPrice,
+                SaleAmount = listing.SaleAmount,
+                Vehicle = listing.Vehicle,
+                Links = null,
+            }).ToList();
         }
 
         // Read: /listings/{id}
