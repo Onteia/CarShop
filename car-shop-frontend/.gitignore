@@ -19,7 +19,7 @@
 
 # production
 /build
-/media
+/public/media
 
 # misc
 .DS_Store
