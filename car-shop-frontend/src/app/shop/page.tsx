@@ -1,32 +1,10 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient, QueryCache } from "@tanstack/react-query";
+import { ListingModel } from "@/types";
 import Link from "next/link";
 
-type ImageModel = {
-  imageID: string,
-  imageURI: string,
-}
-
-type Vehicle = {
-  vehicleID: string,
-  model: string,
-  year: number,
-  isUsed: boolean,
-  vehicleType: object,
-  vehicleMake: object,
-  images: ImageModel[],
-}
-
-type Listing = {
-  listingID: string,
-  name: string,
-  listPrice: number,
-  saleAmount: number,
-  vehicle: Vehicle,
-}
-
-async function fetchListings(): Promise<Listing[]> {
+async function fetchListings(): Promise<ListingModel[]> {
   const response = await fetch("http://localhost:5011/listings", { mode: "cors" });
   return response.json();
 }
