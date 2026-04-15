@@ -33,6 +33,6 @@ export default function RootLayout({
         <Navbar />
         <QueryProvider>{children}</QueryProvider>
       </body>
-    </html>
+    </html >
   );
 }
