@@ -2,8 +2,8 @@ export type AppUserModel = {
   userID: string,
   username: string,
   email: string,
-  cart: CartModel,
-  wishlist: WishlistModel,
+  cartID: string,
+  wishlistID: string,
 };
 
 export type CartModel = {
