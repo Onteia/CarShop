@@ -22,8 +22,7 @@ import UserNavbar from './UserNavbar'
 const navigation = {
     pages: [
         { name: 'Shop', href: '/shop' },
-        { name: 'Company', href: '#' },
-        { name: 'Stores', href: '#' },
+        { name: 'About Us', href: '/about' },
     ],
 }
 
@@ -118,14 +117,14 @@ export default function Navbar({ isAuth }: { isAuth: boolean }) {
 
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
-                                <a href="#">
+                                <Link href="/">
                                     <span className="sr-only">Carketplace Logo</span>
                                     <img
                                         alt=""
                                         src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                                         className="h-8 w-auto"
                                     />
-                                </a>
+                                </Link>
                             </div>
 
                             {/* Flyout menus */}
@@ -161,24 +160,16 @@ export default function Navbar({ isAuth }: { isAuth: boolean }) {
                                     }
                                 </div>
 
-                                {/* Search */}
-                                <div className="flex lg:ml-6">
-                                    <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                                        <span className="sr-only">Search</span>
-                                        <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                                    </a>
-                                </div>
-
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                    <Link href="/user/cart" className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
                                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                                         />
                                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                                         <span className="sr-only">items in cart, view bag</span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
