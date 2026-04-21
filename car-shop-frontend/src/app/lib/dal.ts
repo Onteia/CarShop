@@ -41,6 +41,21 @@ export const getUserCartListings = cache(async () => {
     return await Promise.all(cartListings);
 });
 
+export const getWishlistListings = cache(async () => {
+    const user = await getUser();
+    if (user === null) return null;
+
+    const response = await fetch(`${API_URI}/wishlists/${user.wishlistID}/listings`, { mode: "cors" })
+    if (!response.ok) return null;
+
+    const wishlistListingIDs: string[] = (await response.json())?.listings;
+    const wishlistListings = wishlistListingIDs.map(async (listingID) => {
+        return getListing(listingID);
+    });
+
+    return await Promise.all(wishlistListings);
+});
+
 export const getListing = cache(async (listingID: string) => {
     const response = await fetch(`${API_URI}/listings/${listingID}`);
     const listing: ListingModel = (await response.json());
