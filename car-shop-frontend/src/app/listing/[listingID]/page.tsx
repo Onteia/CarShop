@@ -4,17 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ListingModel } from "@/types";
 import { useRouter } from "next/navigation";
 import { use } from "react";
+import { formatPrice, getListingPrice } from "@/app/utils/listingUtils";
 
 async function fetchListing(id: string): Promise<ListingModel> {
     const response = await fetch(`http://localhost:5011/listings/${id}`, { mode: "cors" });
     return response.json();
-}
-
-function getListingPrice(listing: ListingModel | undefined) {
-    if (listing === undefined) return 0;
-    if (listing.saleAmount === undefined || listing.saleAmount === 0) return listing.listPrice;
-
-    return (100 - (listing.saleAmount)) / 100 * listing.listPrice;
 }
 
 export default function Page({ params }: { params: Promise<{ listingID: string }> }) {
@@ -63,7 +57,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Vehicle information</h2>
                         <p className="text-3xl tracking-tight text-gray-900">{(getListingPrice(data)).toLocaleString("en-US", { style: "currency", currency: "USD" })}
-                            {(data?.listPrice !== getListingPrice(data)) && <span style={{ whiteSpace: "pre", fontSize: 12, verticalAlign: "center" }}>    List: <s>{data?.listPrice}</s></span>}
+                            {(data?.listPrice !== getListingPrice(data)) && <span style={{ whiteSpace: "pre", fontSize: 12, verticalAlign: "center" }}>    List: <s>{formatPrice(data?.listPrice)}</s></span>}
                         </p>
 
                         <div className="mt-6">
