@@ -85,12 +85,12 @@ export default function Navbar({ isAuth }: { isAuth: boolean }) {
                             ) :
                                 <>
                                     <div className="flow-root">
-                                        <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                                        <Link href="/account/login" className="-m-2 block p-2 font-medium text-gray-900">
                                             Sign in
                                         </Link>
                                     </div>
                                     <div className="flow-root">
-                                        <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                                        <Link href="/account/create" className="-m-2 block p-2 font-medium text-gray-900">
                                             Create account
                                         </Link>
                                     </div>

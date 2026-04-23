@@ -10,7 +10,7 @@ export function Checkout({ listings }: { listings: ListingModel[] | null }) {
         <Form className="fixed bg-white border border-gray-200 rounded-md px-4 py-6 sm:px-6"
             onSubmit={e => {
                 e.preventDefault();
-                redirect("/");
+                redirect("/transaction/success");
             }}>
             <div className="flex justify-between text-base font-medium text-gray-900" >
                 <p>Subtotal </p>
