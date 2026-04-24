@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarShopBackend.Models;
 
-public class ListingModel {
+public class ListingModel
+{
 
-    public ListingModel() {
+    public ListingModel()
+    {
         ListingID = Guid.NewGuid();
     }
 
@@ -24,5 +26,5 @@ public class ListingModel {
     public virtual VehicleModel Vehicle { get; set; }
 
     public virtual List<ListingToCartModel> ListingToCart { get; set; }
-    public virtual List<ListingToWishlist> ListingToWishlist { get; set; }
+    public virtual List<ListingToWishlistModel> ListingToWishlist { get; set; }
 }

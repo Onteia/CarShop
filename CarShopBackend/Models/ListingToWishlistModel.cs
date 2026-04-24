@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarShopBackend.Models;
 
-public class ListingToWishlist {
+public class ListingToWishlistModel
+{
 
-    public ListingToWishlist() {
+    public ListingToWishlistModel()
+    {
         ListingToWishlistID = Guid.NewGuid();
     }
 
