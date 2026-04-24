@@ -5,6 +5,7 @@ import { ListingModel } from "@/types";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 import { formatPrice, getListingPrice } from "@/app/utils/listingUtils";
+import { Button, Form } from "react-aria-components";
 
 async function fetchListing(id: string): Promise<ListingModel> {
     const response = await fetch(`http://localhost:5011/listings/${id}`, { mode: "cors" });
@@ -22,7 +23,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
     if (isError) return <p>{(error as Error).message}</p>;
 
     return (
-        <div className="bg-zinc-50">
+        <div className="grow bg-zinc-50">
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -83,6 +84,20 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                                 <p className="sr-only">4 out of 5 stars</p>
                                 <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">117 reviews</a>
                             </div>
+                        </div>
+                        <div className="mt-4 flex gap-4">
+                            <Form action={(formData) => {
+                                // TODO:
+                                // do stuff with formData
+                            }}>
+                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">Add to cart</Button>
+                            </Form>
+                            <Form action={(formData) => {
+                                // TODO:
+                                // do stuff with formData
+                            }}>
+                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">Add to wishlist</Button>
+                            </Form>
                         </div>
 
                     </div>
