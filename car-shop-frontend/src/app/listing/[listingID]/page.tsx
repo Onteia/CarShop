@@ -22,7 +22,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
     if (isError) return <p>{(error as Error).message}</p>;
 
     return (
-        <div className="bg-white">
+        <div className="bg-zinc-50">
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

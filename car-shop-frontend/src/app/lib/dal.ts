@@ -64,7 +64,7 @@ export const getListing = cache(async (listingID: string) => {
 
 export const getListings = cache(async () => {
     const response = await fetch(`${API_URI}/listings`, { mode: "cors" });
-    const listings: ListingModel[] = (await response.json())?.listings;
+    const listings: ListingModel[] = (await response.json());
 
     return listings;
 });

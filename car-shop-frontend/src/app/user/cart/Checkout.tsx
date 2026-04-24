@@ -7,7 +7,7 @@ import { Button, Form } from "react-aria-components";
 
 export function Checkout({ listings }: { listings: ListingModel[] | null }) {
     return (
-        <Form className="fixed bg-white border border-gray-200 rounded-md px-4 py-6 sm:px-6"
+        <Form className="fixed bg-zinc-50 border border-gray-200 rounded-md px-4 py-6 sm:px-6"
             onSubmit={e => {
                 e.preventDefault();
                 redirect("/transaction/success");
