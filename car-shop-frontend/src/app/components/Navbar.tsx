@@ -149,11 +149,11 @@ export default function Navbar({ isAuth }: { isAuth: boolean }) {
                                         <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
                                     </>
                                     ) : <>
-                                        <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        <Link href="/account/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                             Sign in
                                         </Link>
                                         <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                        <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        <Link href="/account/create" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                             Create account
                                         </Link>
                                     </>
