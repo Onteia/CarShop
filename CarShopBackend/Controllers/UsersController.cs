@@ -26,6 +26,9 @@ namespace CarShopBackend.Controllers
         {
             if (registeruser == null) return BadRequest();
 
+            var existingEmail = await _userManager.FindByEmailAsync(registeruser.Email);
+            if (existingEmail == null) return Forbid();
+
             AppUser user = new AppUser
             {
                 UserName = registeruser.Username,

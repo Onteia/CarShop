@@ -1,10 +1,13 @@
 "use client";
 
+import { CreateUser } from "@/app/actions/userActions";
 import Link from "next/link";
+import { useActionState } from "react";
 import { Button, Form, Input, Label } from "react-aria-components";
 
 
 export default function Page() {
+    const [state, action, isPending] = useActionState(CreateUser, undefined)
     return (
         <div className="grow bg-zinc-50">
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -19,17 +22,7 @@ export default function Page() {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <Form className="space-y-6"
-                        action={(formData) => {
-                            // TODO: 
-                            // validate fields, make sure passwords match (actually maybe do this part on the client instead of server)
-                            // then query api for existing user
-                            // if exists, send error
-                            // if other error, also error
-                            // create user
-                            // if error, send another error
-                            // then after everything is good
-                            // only then, set the cookie that the user is logged in.
-                        }}>
+                        action={action}>
                         <div>
                             <Label htmlFor="username" className="block text-sm/6 font-medium text-gray-800">
                                 Username
@@ -96,13 +89,19 @@ export default function Page() {
                                 />
                             </div>
                         </div>
+                        <div className="text-red-400 text-sm">
+                            {state?.message ?? (
+                                <p>{state?.message}</p>
+                            )}
+                        </div>
 
                         <div>
                             <Button
                                 type="submit"
+                                isDisabled={isPending}
                                 className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                             >
-                                Sign in
+                                {isPending ? "Creating account" : "Create account"}
                             </Button>
                         </div>
                     </Form>
