@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { encrypt } from "../lib/session";
+import { getUser } from "../lib/dal";
 
 //export async function CreateUser() {
 
@@ -40,8 +41,15 @@ export async function LoginUser(_: any, formData: FormData) {
     };
 
     const user = (await data.json() as AppUserModel);
-    //redirect("/store");
     const cookie = await cookies();
     cookie.set("session", await encrypt({ userID: user.userID }));
+    redirect("/")
+}
+
+export async function LogOutUser() {
+    const cookie = await cookies();
+    if (cookie.get("session") === undefined) return;
+
+    cookie.delete("session");
     redirect("/");
 }

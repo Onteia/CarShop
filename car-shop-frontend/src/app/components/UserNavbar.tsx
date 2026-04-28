@@ -2,7 +2,8 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
 import { use } from "react";
-
+import { Button } from "react-aria-components";
+import { LogOutUser } from "../actions/userActions";
 
 export default function UserNavbar() {
     return (
@@ -22,6 +23,9 @@ export default function UserNavbar() {
                     <Link className="block rounded-lg px-3 py-2 transition hover:bg-black/10 text-gray-700 hover:text-gray-800" href="/user/wishlist">
                         <p>Wishlist</p>
                     </Link>
+                    <Button type="button" onClick={LogOutUser} className="block rounded-lg px-3 py-2 transition hover:bg-black/10 text-red-400 hover:text-red-600">
+                        <p>Log Out</p>
+                    </Button>
                 </div>
             </PopoverPanel>
         </Popover>
