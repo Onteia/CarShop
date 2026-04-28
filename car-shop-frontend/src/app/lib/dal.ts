@@ -3,9 +3,8 @@ import "server-only";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/lib/session";
 import { cache } from "react";
+import { API_URI } from "@/config";
 import { AppUserModel, ListingModel } from "@/types";
-
-const API_URI = process.env.API_URI;
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get("session")?.value;

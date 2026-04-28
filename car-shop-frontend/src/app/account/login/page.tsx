@@ -1,10 +1,14 @@
 "use client";
 
+import { LoginUser } from "@/app/actions/userActions";
 import Link from "next/link";
+import { useActionState } from "react";
 import { Button, Form, Input, Label } from "react-aria-components";
 
-
 export default function Page() {
+  const [state, action, isPending] = useActionState(LoginUser, undefined);
+
+
   return (
     <div className="grow bg-zinc-50">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -16,12 +20,9 @@ export default function Page() {
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-800">Sign in to your account</h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <Form className="space-y-6"
-            action={(formData) => {
-              // TODO: validate and send post to api
-            }}>
+            action={action}>
             <div>
               <Label htmlFor="email" className="block text-sm/6 font-medium text-gray-800">
                 Email address
@@ -55,13 +56,18 @@ export default function Page() {
                 />
               </div>
             </div>
-
+            <div className="text-red-400 text-sm">
+              {state?.message ?? (
+                <p>{state?.message}</p>
+              )}
+            </div>
             <div>
               <Button
                 type="submit"
+                isDisabled={isPending}
                 className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
-                Sign in
+                {isPending ? "Signing in..." : "Sign in"}
               </Button>
             </div>
           </Form>
