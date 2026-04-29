@@ -31,6 +31,13 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
         });
     }, [cartState]);
 
+    useEffect(() => {
+        if (wishlistState.message === "") return;
+        toast(wishlistState.message, {
+            type: (wishlistState.success) ? "success" : "error",
+        })
+    }, [wishlistState]);
+
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>{(error as Error).message}</p>;
 
@@ -100,13 +107,13 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                         <div className="mt-4 flex gap-4">
                             <Form action={cartAction}>
                                 <input type="hidden" name="listingId" value={listingID} />
-                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
+                                <Button type="submit" isDisabled={cartPending} className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
                                     Add to cart
                                 </Button>
                             </Form>
                             <Form action={wishlistAction}>
                                 <input type="hidden" name="listingId" value={listingID} />
-                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
+                                <Button type="submit" isDisabled={wishlistPending} className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
                                     Add to wishlist
                                 </Button>
                             </Form>
