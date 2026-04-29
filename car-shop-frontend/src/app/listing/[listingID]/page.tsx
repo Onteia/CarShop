@@ -3,9 +3,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { ListingModel } from "@/types";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { use, useActionState, useEffect } from "react";
 import { formatPrice, getListingPrice } from "@/app/utils/listingUtils";
 import { Button, Form } from "react-aria-components";
+import { addListingToCart } from "@/app/actions/cartActions";
+import { addListingToWishlist } from "@/app/actions/wishlistActions";
+import { toast } from "react-toastify";
 
 async function fetchListing(id: string): Promise<ListingModel> {
     const response = await fetch(`http://localhost:5011/listings/${id}`, { mode: "cors" });
@@ -18,6 +21,15 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
         queryKey: ["listing"],
         queryFn: () => fetchListing(listingID)
     });
+    const [cartState, cartAction, cartPending] = useActionState(addListingToCart, { success: false, message: "" });
+    const [wishlistState, wishlistAction, wishlistPending] = useActionState(addListingToWishlist, { success: false, message: "" });
+
+    useEffect(() => {
+        if (cartState.message === "") return;
+        toast(cartState.message, {
+            type: (cartState.success) ? "success" : "error",
+        });
+    }, [cartState]);
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>{(error as Error).message}</p>;
@@ -86,17 +98,17 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                             </div>
                         </div>
                         <div className="mt-4 flex gap-4">
-                            <Form action={(formData) => {
-                                // TODO:
-                                // do stuff with formData
-                            }}>
-                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">Add to cart</Button>
+                            <Form action={cartAction}>
+                                <input type="hidden" name="listingId" value={listingID} />
+                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
+                                    Add to cart
+                                </Button>
                             </Form>
-                            <Form action={(formData) => {
-                                // TODO:
-                                // do stuff with formData
-                            }}>
-                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">Add to wishlist</Button>
+                            <Form action={wishlistAction}>
+                                <input type="hidden" name="listingId" value={listingID} />
+                                <Button type="submit" className="rounded-md border-transparent bg-indigo-600 px-4 py-2 text-base text-sm text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer">
+                                    Add to wishlist
+                                </Button>
                             </Form>
                         </div>
 
