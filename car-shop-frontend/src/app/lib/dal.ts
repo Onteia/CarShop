@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { decrypt } from "@/app/lib/session";
 import { cache } from "react";
 import { API_URI } from "@/config";
-import { AppUserModel, ListingModel } from "@/types";
+import { AppUserModel } from "@/types";
+import { getListing } from "../actions/listingActions";
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get("session")?.value;
@@ -25,21 +26,6 @@ export const getUser = cache(async () => {
     return await response.json() as AppUserModel;
 });
 
-export const getUserCartListings = cache(async () => {
-    const user = await getUser();
-    if (user === null) return null;
-
-    const response = await fetch(`${API_URI}/carts/${user.cartID}/listings`, { mode: "cors" });
-    if (!response.ok) return null;
-
-    const cartListingIDs: string[] = (await response.json())?.listings;
-    const cartListings = cartListingIDs.map(async (listingID) => {
-        return getListing(listingID);
-    });
-
-    return await Promise.all(cartListings);
-});
-
 export const getWishlistListings = cache(async () => {
     const user = await getUser();
     if (user === null) return null;
@@ -55,15 +41,3 @@ export const getWishlistListings = cache(async () => {
     return await Promise.all(wishlistListings);
 });
 
-export const getListing = cache(async (listingID: string) => {
-    const response = await fetch(`${API_URI}/listings/${listingID}`);
-    const listing: ListingModel = (await response.json());
-    return listing;
-});
-
-export const getListings = cache(async () => {
-    const response = await fetch(`${API_URI}/listings`, { mode: "cors" });
-    const listings: ListingModel[] = (await response.json());
-
-    return listings;
-});

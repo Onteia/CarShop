@@ -1,6 +1,6 @@
 "use server";
 
-import { getListings } from "@/app/lib/dal";
+import { getListings } from "../actions/listingActions";
 import { ShopListing } from "./ShopListings";
 
 export default async function Page() {
