@@ -5,7 +5,6 @@ import { decrypt } from "@/app/lib/session";
 import { cache } from "react";
 import { API_URI } from "@/config";
 import { AppUserModel } from "@/types";
-import { getListing } from "../actions/listingActions";
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get("session")?.value;
@@ -25,19 +24,3 @@ export const getUser = cache(async () => {
 
     return await response.json() as AppUserModel;
 });
-
-export const getWishlistListings = cache(async () => {
-    const user = await getUser();
-    if (user === null) return null;
-
-    const response = await fetch(`${API_URI}/wishlists/${user.wishlistID}/listings`, { mode: "cors" })
-    if (!response.ok) return null;
-
-    const wishlistListingIDs: string[] = (await response.json())?.listings;
-    const wishlistListings = wishlistListingIDs.map(async (listingID) => {
-        return getListing(listingID);
-    });
-
-    return await Promise.all(wishlistListings);
-});
-
