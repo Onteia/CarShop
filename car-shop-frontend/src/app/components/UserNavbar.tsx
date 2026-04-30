@@ -1,7 +1,5 @@
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import Link from "next/link";
-import { redirect, RedirectType } from "next/navigation";
-import { use, useState } from "react";
+import { useState } from "react";
 import { Button } from "react-aria-components";
 import { LogOutUser } from "../actions/userActions";
 

@@ -1,21 +1,15 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import {
     Dialog,
     DialogBackdrop,
     DialogPanel,
-    Popover,
-    PopoverButton,
     PopoverGroup,
-    PopoverPanel,
-    Tab,
     TabGroup,
     TabList,
-    TabPanel,
-    TabPanels,
 } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import UserNavbar from './UserNavbar'
 

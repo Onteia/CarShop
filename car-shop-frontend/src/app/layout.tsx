@@ -5,6 +5,7 @@ import Navbar from "@/app/components/Navbar";
 import QueryProvider from "./components/QueryProvider";
 import { verifySession } from "./lib/dal";
 import { ToastContainer } from "react-toastify";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
