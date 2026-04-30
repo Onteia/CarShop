@@ -1,12 +1,10 @@
 "use client";
 
-import Listings from "./Listings";
-import { Checkout } from "./Checkout";
 import { ListingModel } from "@/types";
 import Link from "next/link";
 import { Button, Form, Separator } from "react-aria-components";
 import { formatPrice, getListingPrice, getTotalPrice } from "@/app/utils/listingUtils";
-import { use, useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { getUserCartListings, removeListingFromCart } from "@/app/actions/cartActions";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
