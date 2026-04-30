@@ -5,6 +5,7 @@ import { getUser, verifySession } from "../lib/dal";
 import { API_URI } from "@/config";
 import { cache } from "react";
 import { getListing } from "./listingActions";
+import { addListingToCart } from "./cartActions";
 
 export const getWishlistListings = cache(async () => {
     const user = await getUser();
@@ -72,4 +73,37 @@ export async function removeListingFromWishlist(_: { success: boolean, message: 
     }
 
     return { success: true, message: "Removed from your wishlist", };
+}
+
+export async function moveListingToCart(_: { success: boolean, message: string }, formData: FormData) {
+    const user = await getUser();
+    if (user === null) redirect("/account/login");
+    if (API_URI === undefined) return {
+        success: false,
+        message: "Couldn't access API,"
+    };
+
+    const listingID = formData.get("listingId") as string;
+    const listings = await getWishlistListings();
+    if (listings === undefined || !listings.map(listing => listing.listingID).includes(listingID)) return {
+        success: false,
+        message: "Listing is not in your wishlist: ",
+    };
+
+    const removeWishlistResult = await removeListingFromWishlist(_, formData);
+    const addCartResult = await addListingToCart(_, formData);
+    if (!removeWishlistResult.success) return {
+        success: removeWishlistResult.success,
+        message: removeWishlistResult.message,
+    };
+
+    if (!addCartResult.success) return {
+        success: addCartResult.success,
+        message: addCartResult.message,
+    };
+
+    return {
+        success: true,
+        message: "Moved listing to your cart",
+    };
 }
