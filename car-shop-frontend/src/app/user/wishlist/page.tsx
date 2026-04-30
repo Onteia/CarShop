@@ -6,6 +6,7 @@ import { getWishlistListings, removeListingFromWishlist } from "@/app/actions/wi
 import Link from "next/link";
 import { formatPrice, getListingPrice } from "@/app/utils/listingUtils";
 import { Button, Form, Separator } from "react-aria-components";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const [listings, setListings] = useState<ListingModel[]>([]);
@@ -16,6 +17,13 @@ export default function Page() {
 
   useEffect(() => {
     getWishlistListings().then((response) => (response !== undefined) ? setListings(response) : setListings([]));
+  }, [removeState]);
+
+  useEffect(() => {
+    if (removeState.message === "") return;
+    toast(removeState.message, {
+      type: (removeState.success) ? "success" : "error",
+    });
   }, [removeState]);
 
   return (
