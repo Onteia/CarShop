@@ -56,9 +56,12 @@ export default function Home() {
             ))}
           </dl>
         </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max0w04xl grid grid-flow-col justify-end">
+        <div className="mx-auto mt-16 max-w-2xl gap-8 sm:mt-20 lg:mt-24 lg:max0w04xl grid grid-flow-col justify-end">
           <Link href="/shop" className="rounded-md text-zinc-50 bg-indigo-600 border border-transparent shadow-xs px-6 py-3 font-medium hover:bg-indigo-700 hover:cursor-pointer">
             Shop now!
+          </Link>
+          <Link href="/list" className="rounded-md text-zinc-50 bg-indigo-600 border border-transparent shadow-xs px-6 py-3 font-medium hover:bg-indigo-700 hover:cursor-pointer">
+            List your vehicle now!
           </Link>
         </div>
       </div>

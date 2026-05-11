@@ -16,6 +16,7 @@ import UserNavbar from './UserNavbar'
 const navigation = {
     pages: [
         { name: 'Shop', href: '/shop' },
+        { name: 'List Your Vehicle', href: '/list' },
         { name: 'About Us', href: '/about' },
     ],
 }
