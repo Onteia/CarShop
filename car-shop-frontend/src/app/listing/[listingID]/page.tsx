@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { getListing } from "@/app/actions/listingActions";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ImageCarousel from "./ImageCarousel";
 
 export default function Page({ params }: { params: Promise<{ listingID: string }> }) {
     const { listingID } = use(params);
@@ -43,7 +44,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
 
     return (
         <div className="grow bg-zinc-50">
-            <div className="pt-6">
+            <div className="py-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                         <li>
@@ -142,9 +143,9 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                     </div>
                 </div>
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-8 lg:px-8">
-                    {listing?.vehicle.images.map((image, key) => (
-                        <img key={key} src={image.imageURI} className="row-span-2 aspect-3/4 size-full rounded-lg object-cover max-lg:hidden" />
-                    ))}
+                    {listing &&
+                        <ImageCarousel listingImages={listing.vehicle.images} />
+                    }
                 </div>
 
             </div>
