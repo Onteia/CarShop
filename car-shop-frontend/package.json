@@ -20,7 +20,8 @@
     "react-aria-components": "^1.17.0",
     "react-dom": "19.2.4",
     "react-loading-skeleton": "^3.5.0",
-    "react-toastify": "^11.1.0"
+    "react-toastify": "^11.1.0",
+    "use-debounce": "^10.1.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
