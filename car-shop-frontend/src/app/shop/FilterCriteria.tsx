@@ -73,9 +73,9 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
         }}>Reset Filters</Button>
       </div>
       <Input placeholder="Search listing names" onChange={(e) => {
-
         handleDelayedSearch({ listingName: e.target.value })
       }}
+        defaultValue={searchTerms.listingName}
         className="text-md bg-zinc-50 px-2 py-1 text-zinc-500 rounded-md outline-1"
       />
       <div className="flex flex-col">
@@ -110,6 +110,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
 
       <p className="text-black text-lg" style={{ fontWeight: "bold" }}>Vehicle</p>
       <Input placeholder="Search vehicle models" onChange={(e) => handleDelayedSearch({ modelName: e.target.value })}
+        defaultValue={searchTerms.modelName}
         className="text-md bg-zinc-50 px-2 py-1 text-zinc-500 rounded-md outline-1"
       />
       <div className="flex flex-row gap-2">
