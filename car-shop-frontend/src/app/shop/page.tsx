@@ -6,12 +6,16 @@ import { ShopListing } from "./ShopListings";
 import { FilterCriteria } from "./FilterCriteria";
 import { getListingPrice, getTotalPrice } from "../utils/listingUtils";
 import SearchTerm from "./SearchTerm";
+import { getVehicleTypes } from "../actions/vehicleTypeActions";
+import { getVehicleMakes } from "../actions/vehicleMakeActions";
 
 export default async function Page(props: {
   searchParams?: Promise<SearchTerm>;
 }) {
   const searchParams = await props.searchParams;
 
+  const vehicleTypes = await getVehicleTypes();
+  const vehicleMakes = await getVehicleMakes();
   const listings = await getListings();
   let filteredListings = listings;
 
@@ -37,8 +41,8 @@ export default async function Page(props: {
             maxYear={listings.reduce((prev, cur) => (prev >= cur.vehicle.year) ? prev : cur.vehicle.year, listings[0].vehicle.year)}
             minPrice={listings.reduce((prev, cur) => (prev <= cur.listPrice) ? prev : cur.listPrice, listings[0].listPrice)}
             maxPrice={listings.reduce((prev, cur) => (prev >= cur.listPrice) ? prev : cur.listPrice, listings[0].listPrice)}
-            vehicleTypes={listings.map(l => l.vehicle.vehicleType).filter((type, index, vTypeArray) => vTypeArray.findIndex(t => t.vehicleTypeID === type.vehicleTypeID) === index)}
-            vehicleMakes={listings.map(l => l.vehicle.vehicleMake).filter((make, index, vMakeArray) => vMakeArray.findIndex(m => m.vehicleMakeID === make.vehicleMakeID) === index)}
+            vehicleTypes={vehicleTypes}
+            vehicleMakes={vehicleMakes}
           />
         </div>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
