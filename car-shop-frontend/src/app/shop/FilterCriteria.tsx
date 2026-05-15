@@ -56,7 +56,6 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
   }, 300);
 
   useEffect(() => {
-    console.log(searchTerms);
     handleSearch(searchTerms);
   }, [searchTerms]);
 

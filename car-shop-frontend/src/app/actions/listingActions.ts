@@ -39,15 +39,6 @@ export async function createListing(_: { success: boolean, message: string, data
         data: vehicle.data,
     };
 
-    const payload = JSON.stringify({
-        Name: name,
-        ListPrice: listPrice,
-        SaleAmount: saleAmount,
-        VehicleModelID: vehicle.data
-    });
-
-    console.log("payload: ", payload);
-
     const data = await fetch(`${API_URI}/listings`, {
         method: "POST",
         mode: "cors",
