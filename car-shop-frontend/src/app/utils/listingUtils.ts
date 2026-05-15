@@ -15,10 +15,5 @@ export function formatPrice(price: number | undefined, currency = "USD"): string
 export function getTotalPrice(listings: ListingModel[] | null) {
     if (listings === null) return 0;
 
-    var priceSum = 0;
-    for (const listing of listings) {
-        priceSum += getListingPrice(listing);
-    }
-
-    return priceSum;
+    return listings.reduce((prev, cur) => prev + getListingPrice(cur), 0);
 }

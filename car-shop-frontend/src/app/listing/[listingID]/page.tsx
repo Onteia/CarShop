@@ -84,7 +84,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Vehicle information</h2>
                         {loading ? <Skeleton className="text-3xl tracking-tight text-gray-900" /> :
-                            <p className="text-3xl tracking-tight text-gray-900">{(getListingPrice(listing)).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                            <p className="text-3xl tracking-tight text-gray-900">{(formatPrice(getListingPrice(listing)))}
                                 {(listing?.listPrice !== getListingPrice(listing)) && <span style={{ whiteSpace: "pre", fontSize: 12, verticalAlign: "center" }}>    List: <s>{formatPrice(listing?.listPrice)}</s></span>}
                             </p>
                         }
