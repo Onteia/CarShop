@@ -36,6 +36,13 @@ export async function addListingToWishlist(_: { success: boolean, message: strin
     }
 
     const listingID = formData.get("listingId") as string;
+
+    const wishlistListings = await getWishlistListings();
+    if (wishlistListings && wishlistListings.find(l => l.listingID === listingID)) return {
+        success: false,
+        message: "This listing is already in your wishlist",
+    };
+
     const data = await fetch(`${API_URI}/wishlists/${user.wishlistID}/listings`, {
         method: "POST",
         mode: "cors",
@@ -90,16 +97,16 @@ export async function moveListingToCart(_: { success: boolean, message: string }
         message: "Listing is not in your wishlist: ",
     };
 
-    const removeWishlistResult = await removeListingFromWishlist(_, formData);
     const addCartResult = await addListingToCart(_, formData);
-    if (!removeWishlistResult.success) return {
-        success: removeWishlistResult.success,
-        message: removeWishlistResult.message,
-    };
-
     if (!addCartResult.success) return {
         success: addCartResult.success,
         message: addCartResult.message,
+    };
+
+    const removeWishlistResult = await removeListingFromWishlist(_, formData);
+    if (!removeWishlistResult.success) return {
+        success: removeWishlistResult.success,
+        message: removeWishlistResult.message,
     };
 
     return {

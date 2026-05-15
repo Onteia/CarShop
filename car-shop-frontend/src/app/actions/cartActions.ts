@@ -36,6 +36,13 @@ export async function addListingToCart(_: { success: boolean, message: string },
     };
 
     const listingID = formData.get("listingId") as string;
+
+    const cartListings = await getUserCartListings();
+    if (cartListings && cartListings.find(l => l.listingID === listingID)) return {
+        success: false,
+        message: "This listing is already in your cart",
+    };
+
     const data = await fetch(`${API_URI}/carts/${user.cartID}/listings`, {
         method: "POST",
         mode: "cors",
