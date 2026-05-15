@@ -12,6 +12,7 @@ import { getListing } from "@/app/actions/listingActions";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ImageCarousel from "./ImageCarousel";
+import Link from "next/link";
 
 export default function Page({ params }: { params: Promise<{ listingID: string }> }) {
     const { listingID } = use(params);
@@ -50,7 +51,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                         <li>
                             <div className="flex items-center">
                                 {loading ? <Skeleton containerClassName="flex-1 w-24" /> :
-                                    <a href="#" className="mr-2 text-sm font-medium text-gray-900">{listing?.vehicle.vehicleType.typeName}</a>
+                                    <Link href={`/shop?vehicleTypeID=${listing?.vehicle.vehicleType.vehicleTypeID}`} className="mr-2 text-sm font-medium text-gray-900">{listing?.vehicle.vehicleType.typeName}</Link>
                                 }
                                 <svg viewBox="0 0 16 20" width="16" height="20" fill="currentColor" aria-hidden="true" className="h-5 w-4 text-gray-300">
                                     <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
@@ -60,7 +61,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
                         <li>
                             <div className="flex items-center">
                                 {loading ? <Skeleton containerClassName="flex-1 w-18" /> :
-                                    <a href="#" className="mr-2 text-sm font-medium text-gray-900">{listing?.vehicle.vehicleMake.makeName}</a>
+                                    <Link href={`/shop?vehicleMakeID=${listing?.vehicle.vehicleMake.vehicleMakeID}`} className="mr-2 text-sm font-medium text-gray-900">{listing?.vehicle.vehicleMake.makeName}</Link>
                                 }
                                 <svg viewBox="0 0 16 20" width="16" height="20" fill="currentColor" aria-hidden="true" className="h-5 w-4 text-gray-300">
                                     <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
@@ -70,7 +71,7 @@ export default function Page({ params }: { params: Promise<{ listingID: string }
 
                         <li className="text-sm">
                             {loading ? <Skeleton containerClassName="w-24" /> :
-                                <a href="#" aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">{listing?.vehicle.model}</a>
+                                <Link href={`/shop?modelName=${listing?.vehicle.model}`} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">{listing?.vehicle.model}</Link>
                             }
                         </li>
                     </ol>

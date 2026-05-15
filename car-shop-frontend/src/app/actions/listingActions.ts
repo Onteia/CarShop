@@ -33,7 +33,6 @@ export async function createListing(_: { success: boolean, message: string, data
     const saleAmount = formData.get("saleAmount") as string;
     const vehicle = await createVehicle(_, formData);
 
-    console.log("vehicle: ", vehicle.data);
     if (!vehicle.success) return {
         success: vehicle.success,
         message: vehicle.message,

@@ -17,10 +17,18 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
     vehicleMakes: VehicleMakeModel[],
   }) {
 
-  const [searchTerms, setSearchTerms] = useState<SearchTerm>({});
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [searchTerms, setSearchTerms] = useState<SearchTerm>({
+    listingName: searchParams.get('listingName') ?? undefined,
+    price: (searchParams.get('price')) ? parseFloat(searchParams.get('price')!) : undefined,
+    onSale: searchParams.get('onSale') === 'true',
+    modelName: searchParams.get('modelName') ?? undefined,
+    isUsed: searchParams.get('isUsed') === 'true',
+    vehicleTypeID: searchParams.get('vehicleTypeID') ?? undefined,
+    vehicleMakeID: searchParams.get('vehicleMakeID') ?? undefined,
+  });
 
   const handleSearch = (term: SearchTerm) => {
     const params = new URLSearchParams(searchParams);
@@ -123,7 +131,6 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
           {vehicleTypes.map((type, key) =>
             <li key={key} className="flex flex-row gap-2">
               <Input id={`vehicleType_${key}`} type="radio" value={type.vehicleTypeID}
-                checked={searchTerms?.vehicleTypeID === type.vehicleTypeID}
                 onChange={(e) => {
                   setSearchTerms((prevState) => {
                     return {
@@ -132,6 +139,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
                     };
                   });
                 }}
+                checked={searchParams.get("vehicleTypeID") === type.vehicleTypeID}
               />
               <Label htmlFor={`vehicleType_${key}`} className="text-gray-800 text-sm">
                 {type.typeName}
@@ -141,7 +149,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
         </ul>
       </div>
       <div className="flex flex-col">
-        <Label htmlFor="vehicleType" className="text-gray-800 text-md">Vehicle Make</Label>
+        <Label htmlFor="vehicleMake" className="text-gray-800 text-md">Vehicle Make</Label>
         <ul>
           {vehicleMakes.map((make, key) =>
             <li key={key} className="flex flex-row gap-2">
@@ -156,7 +164,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
                   });
                 }}
               />
-              <Label htmlFor={`vehicleType_${key}`} className="text-gray-800 text-sm">
+              <Label htmlFor={`vehicleMake_${key}`} className="text-gray-800 text-sm">
                 {make.makeName}
               </Label>
             </li>

@@ -14,6 +14,7 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
 
+  console.log("searchparams: ", searchParams?.vehicleTypeID);
   const vehicleTypes = await getVehicleTypes();
   const vehicleMakes = await getVehicleMakes();
   const listings = await getListings();
