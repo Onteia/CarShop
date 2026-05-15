@@ -5,13 +5,14 @@ import Link from "next/link";
 import { Button, Form, Separator } from "react-aria-components";
 import { formatPrice, getListingPrice, getTotalPrice } from "@/app/utils/listingUtils";
 import { useActionState, useEffect, useState } from "react";
-import { getUserCartListings, removeListingFromCart } from "@/app/actions/cartActions";
+import { checkout, getUserCartListings, removeListingFromCart } from "@/app/actions/cartActions";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 
 export default function Page() {
   const [listings, setListings] = useState<ListingModel[]>([]);
   const [removeState, removeAction, removePending] = useActionState(removeListingFromCart, { success: false, message: "" });
+  const [checkoutState, checkoutAction, checkoutPending] = useActionState(checkout, { success: false, message: "" });
 
   useEffect(() => {
     getUserCartListings().then((response) => (response !== undefined) ? setListings(response) : setListings([]));
@@ -23,6 +24,13 @@ export default function Page() {
       type: (removeState.success) ? "success" : "error",
     });
   }, [removeState]);
+
+  useEffect(() => {
+    if (checkoutState.message === "") return;
+    toast(checkoutState.message, {
+      type: (checkoutState.success) ? "success" : "error",
+    });
+  }, [checkoutState]);
 
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans">
@@ -66,16 +74,14 @@ export default function Page() {
             </div>
             <div className="mx-10">
               <Form className="fixed bg-zinc-50 border border-gray-200 rounded-md px-4 py-6 sm:px-6"
-                onSubmit={e => {
-                  e.preventDefault();
-                  redirect("/transaction/success");
-                }}>
+                action={checkoutAction}
+              >
                 <div className="flex justify-between text-base font-medium text-gray-900" >
                   <p>Subtotal </p>
                   <p>{formatPrice(getTotalPrice(listings))}</p>
                 </div>
                 <p className="mt-0.5 text-sm text-gray-500" > Shipping and taxes calculated at checkout.</p>
-                <Button type="submit" className="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer" >
+                <Button type="submit" isDisabled={checkoutPending} className="mt-6 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 hover:cursor-pointer" >
                   Checkout
                 </Button>
               </Form>
