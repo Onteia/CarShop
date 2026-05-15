@@ -17,6 +17,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
     vehicleMakes: VehicleMakeModel[],
   }) {
 
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -40,7 +41,7 @@ export function FilterCriteria({ minYear, maxYear, minPrice, maxPrice, vehicleTy
     (term.vehicleTypeID) ? params.set('vehicleTypeID', `${term.vehicleTypeID}`) : params.delete('vehicleTypeID');
     (term.vehicleMakeID) ? params.set('vehicleMakeID', `${term.vehicleMakeID}`) : params.delete('vehicleMakeID');
 
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const handleDelayedSearch = useDebouncedCallback((term: SearchTerm) => {
